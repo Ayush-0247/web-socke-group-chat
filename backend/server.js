@@ -26,6 +26,7 @@ io.on('connection', (socket) => {
         // io.to(ROOM).emit('roomNotice', userName);
 
         // broadcast
+        // sent to all except joiner
         socket.to(ROOM).emit('roomNotice', userName);
     });
 
