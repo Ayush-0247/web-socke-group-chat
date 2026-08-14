@@ -233,18 +233,24 @@ export default function App() {
                         {formatTime(m.ts)}
                       </div>
                     </div>
-                  </div>
-                </div>
-              );
-            })} */}
-            {messages.map((m) => {
-              return (
-                <div id={m.id}>
-                  <div className="bg-res-200 p-2 m-2 border-2 border-black rounded-2xl">
-                    <div
-                      className={` bg-pink-500 p-2 m-2 flex ${m.sender === userName ? "justify-end" : "justify-start"}`}
-                    >
-                      {m.text}
+
+                    {/* CHAT TEXTAREA */}
+                    <div className="px-4 py-3 border-t border-gray-200 bg-white">
+                        <div className="flex items-center justify-between gap-4 border border-gray-300 rounded-full">
+                            <textarea
+                                rows={1}
+                                value={text}
+                                onChange={(e) => setText(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                placeholder="Type a message..."
+                                className="w-full resize-none px-4 py-4 text-sm outline-none"
+                            />
+                            <button
+                                onClick={sendMessage}
+                                className="bg-green-500 text-white px-4 py-2 mr-2 rounded-full text-sm font-medium cursor-pointer">
+                                Send
+                            </button>
+                        </div>
                     </div>
                   </div>
                 </div>
