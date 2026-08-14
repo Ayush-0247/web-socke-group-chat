@@ -21,7 +21,6 @@ export default function App() {
       });
 
       socket.current.on("chatMessage", (msg) => {
-        // push to existing messages list
         console.log("msg", msg);
         setMessages((prev) => [...prev, msg]);
       });
@@ -32,7 +31,6 @@ export default function App() {
           if (!isExist) {
             return [...prev, userName];
           }
-
           return prev;
         });
       });
@@ -75,18 +73,9 @@ export default function App() {
 
   // SUBMIT NAME TO GET STARTED, OPEN CHAT WINDOW WITH INITIAL MESSAGE
   function handleNameSubmit(e) {
-    // e.preventDefault();
-    // const trimmed = inputName.trim();
-    // if (!trimmed) return;
-
-    // // join room
-    // socket.current.emit('joinRoom', trimmed);
-
-    // setUserName(trimmed);
-    // setShowNamePopup(false);
     e.preventDefault();
-
-    const name = inputName;
+    const name = inputName.trim();
+    if (!name) return;
 
     socket.current.emit("joinRoom", name);
     setUserName(name);
@@ -124,31 +113,6 @@ export default function App() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-zinc-100 p-4 font-inter">
       {/* ENTER YOUR NAME TO START CHATTING */}
-      {/* {showNamePopup && (
-                <div className="fixed inset-0 flex items-center justify-center z-40">
-                    <div className="bg-white rounded-xl shadow-lg max-w-md p-6">
-                        <h1 className="text-xl font-semibold text-black">Enter your name</h1>
-                        <p className="text-sm text-gray-500 mt-1">
-                            Enter your name to start chatting. This will be used to identify
-                        </p>
-                        <form onSubmit={handleNameSubmit} className="mt-4">
-                            <input
-                                autoFocus
-                                value={inputName}
-                                onChange={(e) => setInputName(e.target.value)}
-                                className="w-full border border-gray-200 rounded-md px-3 py-2 outline-green-500 placeholder-gray-400"
-                                placeholder="Your name (e.g. John Doe)"
-                            />
-                            <button
-                                type="submit"
-                                className="block ml-auto mt-3 px-4 py-1.5 rounded-full bg-green-500 text-white font-medium cursor-pointer">
-                                Continue
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            )} */}
-
       {showNamePopup && (
         <div className="bg-pink-500 p-8 m-8 border-2 border-black rounded-2xl">
           <form onSubmit={handleNameSubmit}>
@@ -171,36 +135,11 @@ export default function App() {
       {!showNamePopup && (
         <div className="w-full max-w-2xl h-[90vh] bg-white rounded-xl shadow-md flex flex-col overflow-hidden">
           {/* CHAT HEADER */}
-          {/* <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-200">
-            <div className="h-10 w-10 rounded-full bg-[#075E54] flex items-center justify-center text-white font-semibold">
-              R
-            </div>
-            <div className="flex-1">
-              <div className="text-sm font-medium text-[#303030]">
-                Realtime group chat
-              </div>
-
-              {typers.length ? (
-                <div className="text-xs text-gray-500">
-                  {typers.join(", ")} is typing...
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-            <div className="text-sm text-gray-500">
-              Signed in as{" "}
-              <span className="font-medium text-[#303030] capitalize">
-                {userName}
-              </span>
-            </div>
-          </div> */}
-          {/* chat header */}
           <div className="bg-gray-300 p-4 m-4 border-2 border-black rounded-2xl">
             welcome to realtime group chat
             {typers.length ? (
               <p className="bg-pink-200 p-2 m-2 text-pink-950">
-                {typers} is typing...
+                {typers.join(", ")} is typing...
               </p>
             ) : (
               <p></p>
@@ -210,7 +149,7 @@ export default function App() {
 
           {/* CHAT MESSAGE LIST */}
           <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-zinc-100 flex flex-col">
-            {/* {messages.map((m) => {
+            {messages.map((m) => {
               const mine = m.sender === userName;
               return (
                 <div
@@ -232,25 +171,6 @@ export default function App() {
                       <div className="text-[11px] text-gray-500 text-right">
                         {formatTime(m.ts)}
                       </div>
-                    </div>
-
-                    {/* CHAT TEXTAREA */}
-                    <div className="px-4 py-3 border-t border-gray-200 bg-white">
-                        <div className="flex items-center justify-between gap-4 border border-gray-300 rounded-full">
-                            <textarea
-                                rows={1}
-                                value={text}
-                                onChange={(e) => setText(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                                placeholder="Type a message..."
-                                className="w-full resize-none px-4 py-4 text-sm outline-none"
-                            />
-                            <button
-                                onClick={sendMessage}
-                                className="bg-green-500 text-white px-4 py-2 mr-2 rounded-full text-sm font-medium cursor-pointer">
-                                Send
-                            </button>
-                        </div>
                     </div>
                   </div>
                 </div>
