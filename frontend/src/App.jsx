@@ -202,7 +202,7 @@ export default function App() {
 
                     {/* CHAT TEXTAREA */}
                     <div className="px-4 py-3 border-t border-gray-200 bg-white">
-                        <div className="flex items-center justify-between gap-4 border border-gray-200 rounded-full">
+                        <div className="flex items-center justify-between gap-4 border border-gray-300 rounded-full">
                             <textarea
                                 rows={1}
                                 value={text}
